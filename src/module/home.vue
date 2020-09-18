@@ -1,8 +1,9 @@
-<style scoped>
+<style lang="less" rel="stylesheet/less">
+  @import "./home.less";
 </style>
 
 <template>
-  <div>123</div>
+  <div class="home-container">123456</div>
 </template>
 
 <script>
