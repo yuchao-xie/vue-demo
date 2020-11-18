@@ -149,6 +149,7 @@ function renderChart(body, data) {
         .append('circle')
         .attr('r', 20)
         .attr('fill', '#5596FF')
+        .attr('cursor', 'pointer')
         .call(dragEvent);
 
     //获取坐标点
