@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/module/home.vue'
-import knowledgeMap from '@/module/knowledge-map.vue'
+import home from '@/pages/home/home.vue'
 
 Vue.use(Router)
 
@@ -16,11 +15,6 @@ export default new Router({
             path: '/home',
             name: 'home',
             component: home
-        },
-        {
-            path: '/knowledge-map',
-            name: 'knowledge-map',
-            component: knowledgeMap
         }
     ]
 })
