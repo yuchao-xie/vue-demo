@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/module/home.vue'
 import knowledgeMap from '@/module/knowledge-map.vue'
 
 Vue.use(Router)
@@ -10,12 +9,7 @@ export default new Router({
     routes: [
         {
             path: '*',
-            redirect: '/home'
-        },
-        {
-            path: '/home',
-            name: 'home',
-            component: home
+            redirect: '/knowledge-map'
         },
         {
             path: '/knowledge-map',
