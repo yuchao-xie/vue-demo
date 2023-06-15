@@ -92,59 +92,60 @@ export default {
         handleXlsxJson(xlsxJson1, xlsxJson2) {
             let fileData1 = [];
             xlsxJson1.forEach((item) => {
-                fileData1 = fileData1.concat(item.sheet.slice(1));
+                fileData1 = fileData1.concat(item.sheet);
             });
-            const fileHeader = xlsxJson2[0].sheet[0];
-            fileHeader["__EMPTY_59"] = "一班";
-            fileHeader["__EMPTY_60"] = "二班";
-            fileHeader["__EMPTY_61"] = "三班";
-            fileHeader["__EMPTY_62"] = "四班";
-            fileHeader["__EMPTY_63"] = "试验";
-            fileHeader["__EMPTY_64"] = "保护";
-            fileHeader["__EMPTY_65"] = "分超能";
-            fileHeader["__EMPTY_66"] = "外聘";
-            const leaderKey = "__EMPTY_32"; // "工作负责人（施工负责人）"一栏
-            const personKey = "__EMPTY_53"; // "工作组成员"一栏
-            const fileData2 = xlsxJson2[0].sheet.slice(1);
+            const fileData2 = xlsxJson2[0].sheet;
             for (const row of fileData2) {
-                const group = row[leaderKey]
+                row["一班"] = '';
+                row["二班"] = '';
+                row["三班"] = '';
+                row["四班"] = '';
+                row["试验"] = '';
+                row["保护"] = '';
+                row["分超能"] = '';
+                row["外聘"] = '';
+                const group = row["工作负责人（施工负责人）"]
                     .split(",")
-                    .concat(row[personKey].split(","));
+                    .concat(row["工作组成员"].split(","));
                 group.forEach((person) => {
                     let flag = false;
                     for (const item of fileData1) {
                         if (item["姓名"] === person) {
                             if (item["部门/班组"] === "变电一次检修一班") {
-                                row["__EMPTY_59"] = row["__EMPTY_59"]
-                                    ? `${row["__EMPTY_59"]},${person}`
+                                row["一班"] = row["一班"]
+                                    ? `${row["一班"]},${person}`
                                     : person;
                             } else if (
                                 item["部门/班组"] === "变电一次检修二班"
                             ) {
-                                row["__EMPTY_60"] = row["__EMPTY_60"]
-                                    ? `${row["__EMPTY_60"]},${person}`
+                                row["二班"] = row["二班"]
+                                    ? `${row["二班"]},${person}`
                                     : person;
                             } else if (
                                 item["部门/班组"] === "变电一次检修三班"
                             ) {
-                                row["__EMPTY_61"] = row["__EMPTY_61"]
-                                    ? `${row["__EMPTY_61"]},${person}`
+                                row["三班"] = row["三班"]
+                                    ? `${row["三班"]},${person}`
                                     : person;
                             } else if (
                                 item["部门/班组"] === "变电一次检修四班"
                             ) {
-                                row["__EMPTY_62"] = row["__EMPTY_62"]
-                                    ? `${row["__EMPTY_62"]},${person}`
+                                row["四班"] = row["四班"]
+                                    ? `${row["四班"]},${person}`
                                     : person;
                             } else if (item["部门/班组"] === "电气试验班") {
-                                row["__EMPTY_63"] = row["__EMPTY_63"]
-                                    ? `${row["__EMPTY_63"]},${person}`
+                                row["试验"] = row["试验"]
+                                    ? `${row["试验"]},${person}`
                                     : person;
                             } else if (
                                 item["部门/班组"].indexOf("变电二次检修") !== -1
                             ) {
-                                row["__EMPTY_64"] = row["__EMPTY_64"]
-                                    ? `${row["__EMPTY_64"]},${person}`
+                                row["保护"] = row["保护"]
+                                    ? `${row["保护"]},${person}`
+                                    : person;
+                            } else if (item["部门/班组"] === "分超能") {
+                                row["分超能"] = row["分超能"]
+                                    ? `${row["分超能"]},${person}`
                                     : person;
                             }
                             flag = true;
@@ -152,8 +153,8 @@ export default {
                         }
                     }
                     if (!flag) {
-                        row["__EMPTY_66"] = row["__EMPTY_66"]
-                            ? `${row["__EMPTY_66"]},${person}`
+                        row["外聘"] = row["外聘"]
+                            ? `${row["外聘"]},${person}`
                             : person;
                     }
                 });
@@ -167,7 +168,7 @@ export default {
             // 创建一个新的空的workbook
             var wb = XLSX.utils.book_new();
             // 为每一个工作簿设置名称并添加到workbook（excel表）中
-            XLSX.utils.book_append_sheet(wb, sheet1, "日安排");
+            XLSX.utils.book_append_sheet(wb, sheet1, this.xlsxJson2[0].sheetName);
             // XLSX.utils.book_append_sheet(wb, sheet2, "部门所属信息");
             const workbookBlob = workbook2blob(wb); // 辅助函数workbook2blob
             // 下载文档并添加文件名称
